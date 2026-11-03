@@ -34,10 +34,3 @@ EDIT EXISTING SONGS
 3. Sign in at /admin.html with funnyvoiceovers34@gmail.com.
 4. Use the Edit buttons under Edit Existing Songs. Cover and MP3 replacements are optional.
 5. Existing song metadata and optional media replacements are saved to Supabase and applied on the public home page.
-
-
-ADMIN PANEL FIX (IMPORTANT)
-1. Upload this ZIP to Cloudflare Pages/Workers static assets.
-2. In Supabase SQL Editor, run the updated ADMIN_PANEL_SETUP.sql once. It adds the missing remix_name column and admin UPDATE permission needed by Edit Added Song.
-3. If live views/download totals show unavailable, run the existing SONG_VIEWS / DOWNLOAD_COUNT setup SQL files included in this ZIP, then press Refresh in Admin.
-4. Sign in with the authorised Supabase Auth account. Never share your password or service-role key.
