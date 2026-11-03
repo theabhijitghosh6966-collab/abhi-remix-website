@@ -1,0 +1,8 @@
+ABHI REMIX — GLOBAL DOWNLOAD COUNT SETUP
+
+1. Open your Supabase project → SQL Editor → New query.
+2. Open SUPABASE_DOWNLOAD_COUNT_SETUP.sql from this ZIP, copy all SQL, paste into SQL Editor, and click Run.
+3. After SQL succeeds, deploy the website files from this ZIP to your existing Cloudflare Worker (same way as the previous fixed ZIP).
+4. Refresh the live website. Each song shows global Views and Downloads.
+
+Important: Download count increments when a visitor clicks Download; it records download clicks, not proof that the file finished saving. Never put a Supabase secret key in the website; use only the publishable key.

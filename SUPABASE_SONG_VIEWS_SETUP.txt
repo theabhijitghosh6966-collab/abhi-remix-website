@@ -1,0 +1,30 @@
+ABHI REMIX — SUPABASE SONG PLAY VIEWS
+
+WHAT IS ALREADY DONE IN THIS ZIP
+- Adds separate Views labels to each song card.
+- Loads each song's saved count from your Supabase song_views table.
+- Calls the increment_song_view database function only after Play Track starts successfully.
+- Keeps the website's songs, cover images, and existing Monetag code.
+
+ONE REQUIRED WEBSITE SETTING
+1. Open index.html in a text editor.
+2. Find this line:
+   const SUPABASE_PUBLISHABLE_KEY = '(publishable key already added to index.html)';
+3. Replace only (publishable key already added to index.html) with the Publishable key from Supabase (starts with sb_publishable_). Keep the quotes.
+4. Do NOT use any sb_secret_ key or service_role key in the website. If a secret key was shared publicly, rotate/revoke it in Supabase.
+
+DATABASE SETUP ALREADY COMPLETED IN YOUR SUPABASE PROJECT
+- public.song_views table and song rows
+- public read policy
+- public.increment_song_view(text) RPC function
+
+DEPLOY
+1. Save the edited index.html.
+2. Extract this ZIP on your phone.
+3. Upload the extracted website files as a new deployment of your existing Cloudflare static website Worker, using the same process as before. Do not upload song-views-worker.js into the live site Worker.
+4. Open the site, refresh, and play a song. Its count should increase; other song counts should stay unchanged.
+
+NOTES
+- The count starts from the database value at setup time; it cannot count historical plays. Your manual test of laxmi-puja may mean its starting value is already 1.
+- Every successful Play Track click increments that song by one. This is a basic play counter, not unique-listener analytics.
+- If the site shows “Views: unavailable”, check the publishable key, Supabase project URL, and database policy/function setup.

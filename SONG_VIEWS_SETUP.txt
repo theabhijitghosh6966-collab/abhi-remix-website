@@ -1,0 +1,25 @@
+ABHI REMIX — PER-SONG GLOBAL PLAY VIEWS
+
+The site files in this ZIP preserve the existing songs, covers, and Monetag code. Each song card has its own view count. A view increments when playback starts, not when the song card is merely opened. Counts are shared through Cloudflare KV.
+
+SETUP IS REQUIRED before live counts work:
+1. In Cloudflare dashboard, go to Workers & Pages and create a NEW Worker named abhi-remix-song-views.
+2. Open the new Worker's code editor. Replace the sample code with all of song-views-worker.js from this ZIP, then Save/Deploy.
+3. In Cloudflare dashboard, open Workers & Pages -> KV. You can use your existing ABHI_REMIX_DOWNLOADS namespace or create a new namespace.
+4. Open the NEW counter Worker -> Settings -> Bindings -> Add binding -> KV Namespace.
+   Variable name: SONG_VIEWS_KV
+   Namespace: ABHI_REMIX_DOWNLOADS (or the namespace you created)
+   Save, then deploy the counter Worker again.
+5. Copy the NEW counter Worker's URL. Open this ZIP's index.html and find:
+   const SONG_VIEWS_API_URL = 'https://YOUR-COUNTER-WORKER.workers.dev/api/song-views';
+   Replace the placeholder with your real worker URL, keeping /api/song-views at the end.
+6. Deploy the updated website files to your existing static website Worker as a new deployment, just as you did before. Do not paste song-views-worker.js into the website Worker.
+7. Open the website and play a song. That song's count should increase; the other songs' counts remain unchanged.
+
+SONG IDS:
+laxmi-puja, apdi-pode-pode, kalo-anga-alo-jyoti, ek-bar-nacho-ma, de-signal-8k-jbl-bass
+
+NOTES:
+- Counts start from setup time; old plays cannot be recovered.
+- The counter records a playback-start request; repeated plays and refreshes can count again.
+- This is a basic counter, not a unique-listener analytics system.

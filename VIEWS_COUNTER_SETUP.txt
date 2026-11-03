@@ -1,0 +1,25 @@
+ABHI REMIX — WEBSITE VIEWS COUNTER SETUP
+
+IMPORTANT:
+- The existing website files, songs, covers, Monetag code and verification tags are preserved.
+- The view counter will show "Setup needed" until the separate counter Worker is deployed and its URL is added to index.html.
+- This counter counts page-load requests, not unique people. Refreshing the website can add another view.
+- It starts counting from when you connect it; it cannot recover old views.
+
+STEPS (mobile Cloudflare dashboard):
+1. Workers & Pages -> Create -> Worker. Name it abhi-remix-views (or another name).
+2. Open the new Worker's code editor and replace its sample code with the full contents of counter-worker.js from this ZIP. Save/Deploy this NEW worker only.
+3. In Cloudflare, open Workers & Pages -> KV and select your existing namespace ABHI_REMIX_DOWNLOADS (or create a new KV namespace).
+4. Open the NEW counter Worker -> Settings -> Bindings -> Add binding -> KV Namespace.
+   Variable/binding name: VIEWS_KV
+   Namespace: ABHI_REMIX_DOWNLOADS
+   Save and deploy the counter Worker again.
+5. Copy the new counter Worker's workers.dev URL. Its endpoint will be:
+   https://YOUR-WORKER-NAME.YOUR-SUBDOMAIN.workers.dev/api/views
+6. In this website ZIP's index.html, find:
+   const COUNTER_API_URL = 'https://YOUR-COUNTER-WORKER.workers.dev/api/views';
+   Replace only that URL with your actual endpoint URL, keeping /api/views at the end.
+7. Upload/deploy the updated website files as a NEW deployment for your existing website Worker. Do not edit or replace the existing live Worker code with counter-worker.js.
+8. Open the site and refresh once. "Website Views" should show the count.
+
+If the existing static upload workflow only accepts static files, upload the extracted website files as before. Keep the counter-worker.js and this setup guide as separate setup files; they do not need to be in the public site.

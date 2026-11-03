@@ -1,0 +1,10 @@
+ABHI REMIX Admin email update
+New authorised admin email: funnyvoiceovers34@gmail.com
+
+1. Supabase Dashboard > Authentication > Users > Add user > Create new user.
+2. Create the user with this email and a password you choose privately.
+3. Run ADMIN_PANEL_SETUP.sql in Supabase SQL Editor. This updates the RLS allowlist to the new email.
+4. Deploy all files from this ZIP to the existing Cloudflare Worker/Pages project.
+5. Open /admin.html and sign in with the new email and password.
+
+Do not share your password or Supabase service_role key.
