@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta name="google-site-verification" content="A4ySteUYRWQB6xk3s5E-6Ux2keYUXICHHh6WgRpxbTs" />
-<meta name="monetag" content="157134df4e544d682a606174df4f730b">
-<script>(function(s){s.dataset.zone='12180405',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
- <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="monetag" content="b9473f03e87d41c4a77f89c8d71d7dda">
+<meta name="google-site-verification" content="hc-VnNMywG9dHLwoS1OZxXE_bYaUsdTMLxlYUXY9uLw" />
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#090914"><title>ABHI REMIX — Bengali DJ Remixes, EDM & Bass Music</title>
 <meta name="description" content="Listen to DJ ABHI Remix releases, Bengali DJ remixes, Puja special music, EDM drops and bass mixes. Stream and download tracks shared on ABHI REMIX.">
 <meta name="robots" content="index,follow"><meta name="author" content="DJ ABHI Remix">
@@ -278,7 +278,7 @@ async function loadExistingSongOverrides(){
       if(row.tags)card.dataset.tags=row.tags;
       const pill=card.querySelector('.song-meta .pill');if(pill&&row.category)pill.textContent=row.category;
       const cover=card.querySelector('.cover img');if(cover&&row.cover_path)cover.src=row.cover_path.startsWith('http')?row.cover_path:(SUPABASE_URL+'/storage/v1/object/public/song-media/'+row.cover_path);
-      if(row.audio_path){const audioUrl=row.audio_path.startsWith('http')?row.audio_path:(SUPABASE_URL+'/storage/v1/object/public/song-media/'+row.audio_path);play.dataset.src=audioUrl;play.dataset.title=row.title||title?.textContent||'DJ ABHI Remix';const download=card.querySelector('.download');if(download){download.href=audioUrl;download.download=(row.title||row.song_id).replace(/[^a-z0-9]+/gi,'-')+'.mp3';}}
+      if(row.audio_path){const audioUrl=publicMediaUrl(row.audio_path);play.dataset.src=audioUrl;play.dataset.title=row.title||title?.textContent||'DJ ABHI Remix';const download=card.querySelector('.download');if(download){download.href=audioUrl;download.download=(row.title||row.song_id).replace(/[^a-z0-9]+/gi,'-')+'.mp3';}}
     });
   }catch(e){console.warn('Song overrides could not be loaded',e)}
   renderRemixNameButtons();
@@ -342,24 +342,41 @@ document.querySelectorAll('a.download').forEach(link=>link.addEventListener('cli
   if(songId) incrementSongDownload(songId).catch(()=>{});
 }));
 
+function resolveAudioUrl(value){
+  const raw=String(value||'').trim();
+  if(!raw)return '';
+  // Preserve absolute Supabase/CDN URLs. Never prepend '/' to an absolute URL.
+  if(/^https?:\/\//i.test(raw))return raw;
+  // Keep site-root URLs (for MP3s hosted beside the website) unchanged.
+  if(raw.startsWith('/'))return raw;
+  // Relative paths saved by the Admin Panel are objects in the public song-media bucket.
+  return publicMediaUrl(raw);
+}
+function showAudioError(){
+  const messages={1:'Playback was stopped.',2:'Network error while loading this MP3. Check the Storage URL and connection.',3:'This audio file could not be decoded. Re-upload a valid MP3.',4:'MP3 not found or not publicly accessible. Check the song-media bucket and file path.'};
+  const code=audio.error?.code||0;
+  document.getElementById('nowPlaying').textContent=messages[code]||'Unable to play this track. Check the MP3 URL and Storage permissions.';
+}
+audio.addEventListener('error',showAudioError);
 document.querySelectorAll('[data-src]').forEach(btn=>btn.addEventListener('click',async()=>{
-  const songPath = btn.dataset.src.startsWith('/') ? btn.dataset.src : '/' + btn.dataset.src;
-  selectedSongId=btn.dataset.songId || songPath.split('/').pop().replace('.mp3','');
-  document.getElementById('nowPlaying').textContent='♫ '+btn.dataset.title;
+  const songUrl=resolveAudioUrl(btn.dataset.src);
+  selectedSongId=btn.dataset.songId || (songUrl.split('/').pop()||'').replace(/\.mp3(?:\?.*)?$/i,'');
+  document.getElementById('nowPlaying').textContent='♫ '+(btn.dataset.title||'DJ ABHI Remix');
   player.style.display='block';
   document.body.classList.add('player-open');
   audio.pause();
   audio.removeAttribute('src');
   audio.load();
-  audio.src=songPath;
+  if(!songUrl){document.getElementById('nowPlaying').textContent='MP3 URL is missing. Re-upload this song from Admin Panel.';return;}
+  audio.src=songUrl;
   audio.load();
   player.scrollIntoView({behavior:'smooth',block:'end'});
   try {
     await audio.play();
-    // Count once per successful Play Track click, after playback starts.
-    incrementSongView(selectedSongId).catch(()=>{});
+    // Count only after playback successfully starts.
+    if(selectedSongId)incrementSongView(selectedSongId).catch(()=>{});
   } catch(e) {
-    document.getElementById('nowPlaying').textContent='Unable to play this track — check that the MP3 files were uploaded to Cloudflare';
+    showAudioError();
   }
 }));
 document.getElementById('closePlayer').addEventListener('click',()=>{audio.pause();player.style.display='none';document.body.classList.remove('player-open')});
