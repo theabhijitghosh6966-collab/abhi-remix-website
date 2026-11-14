@@ -564,18 +564,20 @@ document.addEventListener('DOMContentLoaded',function(){
 @media(max-width:380px){.song-card .cover{max-height:110px;}}
 </style>
 
-<style id="abhi-reference-card-layout">
-/* Match the supplied two-column song-card reference. Theme colors are intentionally untouched. */
-.song-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
-.song-card{min-width:0;border-radius:20px;overflow:hidden;}
-.song-card .cover{width:100%;aspect-ratio:1.65 / 1;max-height:none;}
-.song-card .cover img{width:100%;height:100%;object-fit:cover;object-position:center;}
-.song-content{padding:13px;}
-.song-content h3{font-size:15px;line-height:1.35;margin:0 0 8px;}
-.song-meta{display:flex;flex-wrap:wrap;gap:7px;align-items:center;font-size:11px;}
-.song-actions{display:flex;gap:8px;margin-top:13px;}
-.song-actions button,.song-actions a{min-width:0;padding:11px 6px;font-size:11px;}
-@media(max-width:800px){.song-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}}
-@media(max-width:560px){.song-content{padding:11px;} .song-content h3{font-size:13px;} .song-actions{gap:6px;margin-top:11px;} .song-actions button,.song-actions a{font-size:10px;padding:10px 4px;border-radius:10px;} .song-card .cover{aspect-ratio:1.65 / 1;}}
-@media(max-width:360px){.song-content{padding:9px;} .song-actions button,.song-actions a{font-size:9px;}}
+<style id="abhi-original-song-card-refresh">
+/* ABHI REMIX original song cards: artwork first, details below. Theme and all non-card sections stay untouched. */
+.song-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:16px!important}
+.song-card{display:flex!important;flex-direction:column!important;min-width:0!important;overflow:hidden!important;border:1px solid #8b5cff55!important;border-radius:20px!important;background:linear-gradient(160deg,#171326 0%,#11101d 100%)!important;box-shadow:0 8px 24px #0005!important}
+.song-card:hover{transform:translateY(-2px)!important;border-color:#b16cff99!important}
+.song-card .cover{width:100%!important;aspect-ratio:1.65/1!important;max-height:none!important;overflow:hidden!important}
+.song-card .cover img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center!important}
+.song-card .song-content{display:flex!important;flex-direction:column!important;gap:8px!important;padding:13px!important;min-width:0!important}
+.song-card .song-content h3{font-size:14px!important;line-height:1.35!important;margin:0!important;overflow-wrap:anywhere!important}
+.song-card .song-meta{display:flex!important;flex-wrap:wrap!important;align-items:center!important;gap:6px!important;font-size:10px!important}
+.song-card .song-view-count{font-size:10px!important;line-height:1.5!important}
+.song-card .song-actions{display:flex!important;gap:8px!important;margin-top:5px!important}
+.song-card .song-actions button,.song-card .song-actions a{flex:1 1 0!important;min-width:0!important;min-height:40px!important;padding:9px 5px!important;border-radius:11px!important;font-size:10px!important;white-space:nowrap!important}
+@media(max-width:800px){.song-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:12px!important}}
+@media(max-width:560px){.song-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:10px!important}.song-card{border-radius:17px!important}.song-card .cover{aspect-ratio:1.55/1!important}.song-card .song-content{padding:10px!important;gap:7px!important}.song-card .song-content h3{font-size:12px!important}.song-card .song-meta,.song-card .song-view-count{font-size:9px!important}.song-card .song-actions{gap:6px!important;margin-top:4px!important}.song-card .song-actions button,.song-card .song-actions a{min-height:36px!important;padding:8px 3px!important;font-size:9px!important;border-radius:9px!important}}
+@media(max-width:350px){.song-grid{grid-template-columns:1fr!important}}
 </style>
