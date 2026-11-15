@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://abhiremix.pntr.dev/</loc>
-  </url>
+  <url><loc>https://abhiremix.pntr.dev/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://abhiremix.pntr.dev/songs/laxmi-puja/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abhiremix.pntr.dev/songs/apdi-pode-pode/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abhiremix.pntr.dev/songs/kalo-anga-alo-jyoti/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abhiremix.pntr.dev/songs/ek-bar-nacho-ma/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abhiremix.pntr.dev/songs/de-signal-8k-jbl-bass/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://abhiremix.pntr.dev/songs/uttar-para-chala-ami/</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
 </urlset>
